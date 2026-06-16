@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全球数据法规字典</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="全球数据法规字典首页">
+        <span class="brand-mark">GD</span>
+        <span class="brand-copy">
+          <strong>全球数据法规字典</strong>
+          <small>Global Data Regulation Atlas</small>
+        </span>
+      </a>
+
+      <nav class="nav-tabs" id="navTabs" aria-label="主导航"></nav>
+
+      <div class="top-actions" aria-label="全局工具">
+        <button class="icon-button" type="button" aria-label="语言">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M3.8 9h16.4M3.8 15h16.4M12 3c2.1 2.3 3.2 5.3 3.2 9S14.1 18.7 12 21c-2.1-2.3-3.2-5.3-3.2-9S9.9 5.3 12 3Z"></path>
+          </svg>
+        </button>
+        <button class="icon-button" type="button" aria-label="应用菜单">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h5v5h-5z"></path>
+          </svg>
+        </button>
+        <button class="user-button" type="button">用户</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-panel">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow">REGULATORY INTELLIGENCE</p>
+          <h1 id="pageTitle">法规数据检索台</h1>
+          <form class="search-shell" id="searchForm" role="search">
+            <label class="sr-only" for="globalSearch">搜索法规、地区、主题或机构</label>
+            <input id="globalSearch" type="search" placeholder="搜索法规、地区、主题或机构" autocomplete="off" />
+            <button class="search-button" type="submit">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle>
+                <path d="m16.5 16.5 4 4"></path>
+              </svg>
+              搜索
+            </button>
+          </form>
+
+          <div class="type-row" id="typeFilters" aria-label="法规类型筛选"></div>
+          <div class="topic-grid" id="topicFilters" aria-label="核心领域筛选"></div>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="region-panel" aria-label="地区筛选">
+          <div class="panel-heading">
+            <span>监管地区</span>
+            <button class="text-button" type="button" id="clearRegions">全部</button>
+          </div>
+          <div class="region-list" id="regionList"></div>
+        </aside>
+
+        <section class="result-stage" aria-live="polite">
+          <div class="result-toolbar">
+            <div>
+              <p class="muted-label">查询结果</p>
+              <h2><span id="resultCount">0</span> 条合规条目数据</h2>
+            </div>
+            <div class="toolbar-controls">
+              <button class="chip-button is-active" type="button" data-sort="latest">最新</button>
+              <button class="chip-button" type="button" data-sort="region">地区</button>
+              <button class="chip-button" type="button" data-sort="status">状态</button>
+            </div>
+          </div>
+
+          <div class="insight-strip" id="insightStrip"></div>
+          <div class="result-list" id="resultList"></div>
+          <div class="empty-state" id="emptyState" hidden>
+            <strong>暂无匹配结果</strong>
+            <span>请调整关键词或筛选条件。</span>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

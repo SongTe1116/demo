@@ -1,0 +1,4 @@
+.DS_Store
+../demo_1/.idea/
+node_modules/
+dist/
