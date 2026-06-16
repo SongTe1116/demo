@@ -4,8 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>全球数据法规字典</title>
+    <link rel="icon" href="data:," />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="top-tabs/top-tabs.css" />
     <script defer src="app.js"></script>
+    <script defer src="top-tabs/tabs.generated.js"></script>
+    <script defer src="top-tabs/top-tabs.js"></script>
   </head>
   <body>
     <header class="topbar">
@@ -87,6 +91,10 @@
             <span>请调整关键词或筛选条件。</span>
           </div>
         </section>
+      </section>
+
+      <section class="tab-page-host" id="tabPageHost" hidden aria-live="polite">
+        <iframe class="tab-page-frame" id="tabPageFrame" title="业务页面"></iframe>
       </section>
     </main>
   </body>

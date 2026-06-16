@@ -1,11 +1,6 @@
 const seedData = {
   navItems: [
-    { id: "overview", label: "数据总览", title: "法规数据检索台" },
-    { id: "search", label: "法规检索", title: "法规数据检索台" },
-    { id: "map", label: "监管地图", title: "全球监管地图" },
-    { id: "cases", label: "案例库", title: "合规案例库" },
-    { id: "signals", label: "法规动态", title: "法规动态雷达" },
-    { id: "tools", label: "工具台", title: "合规工具台" }
+    { id: "search", label: "法规检索", title: "法规数据检索台" }
   ],
   types: [
     { id: "law", label: "国家/地区法规" },

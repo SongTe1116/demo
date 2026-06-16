@@ -1,0 +1,7 @@
+{
+  "id": "visualization",
+  "label": "可视化",
+  "title": "可视化看板",
+  "order": 100,
+  "url": "index.html"
+}
