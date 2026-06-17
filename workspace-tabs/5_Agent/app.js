@@ -1,33 +1,8 @@
 const app = document.getElementById("agentApp");
 
-function topbar() {
-  return `
-    <header class="topbar">
-      <a class="brand" href="#" data-view="home" aria-label="返回 Agent 首页">
-        <span class="brand-mark">GD</span>
-        <span>
-          <strong>全球数据法规字典</strong>
-          <small>GLOBAL DATA REGULATION ATLAS</small>
-        </span>
-      </a>
-      <nav class="nav">
-        <a href="#">法规检索</a>
-        <a href="#">可视化</a>
-        <a class="is-active" href="#" data-view="home">Agent</a>
-      </nav>
-      <div class="top-actions">
-        <button type="button" aria-label="语言"><i data-lucide="globe-2"></i></button>
-        <button type="button" aria-label="应用"><i data-lucide="layout-grid"></i></button>
-        <button class="user-btn" type="button">用户</button>
-      </div>
-    </header>
-  `;
-}
-
 function renderHome() {
   app.className = "agent-app home-page";
   app.innerHTML = `
-    ${topbar()}
     <section class="home-hero">
       <div class="world-bg" aria-hidden="true"></div>
       <div class="hero-content">
@@ -117,7 +92,6 @@ function renderHome() {
 function renderUpload() {
   app.className = "agent-app light-page";
   app.innerHTML = `
-    ${topbar()}
     <section class="work-page">
       <div class="page-title">
         <div>
@@ -186,7 +160,6 @@ function renderUpload() {
 function renderReport() {
   app.className = "agent-app light-page";
   app.innerHTML = `
-    ${topbar()}
     <section class="report-page">
       <div class="report-actions">
         <button type="button" data-view="upload"><i data-lucide="arrow-left"></i>返回验证列表</button>
