@@ -11,6 +11,8 @@
 - `workspace-tabs/`：各顶部标签对应的独立业务页面目录
 - `top-tabs/`：顶部标签加载器与自动生成的标签清单
 - `scripts/build-top-tabs.mjs`：扫描 `workspace-tabs/*/tab.manifest.json` 并生成标签清单
+- `database/regulation-index.js`：由 `data/法律法规/法规索引数据.xlsx` 生成的前端法规检索数据库
+- `scripts/build-regulation-index.py`：把 Excel 法规索引转换为前端 JSON/JS 数据库
 
 ## 多人协作新增顶部标签
 
@@ -33,6 +35,29 @@ npm run sync-tabs
 脚本会自动更新 `top-tabs/tabs.generated.js`，首页会把该目录挂成新的顶部标签。一般不要直接修改 `index.html`、`top-tabs/top-tabs.js` 或全局 `styles.css`。
 
 如果多人同时新增了不同目录，先 `git pull --rebase origin main`，再运行一次 `npm run sync-tabs`，最后提交自己的目录和生成后的 `top-tabs/tabs.generated.js`。
+
+## 法规检索数据
+
+`data/` 目录不提交到 Git。前端实际读取的是生成后的 `database/regulation-index.js`，它来自本地 Excel：
+
+```bash
+npm run sync-data
+```
+
+如果同时刷新法规数据和顶部标签清单：
+
+```bash
+npm run sync-all
+```
+
+生成脚本会读取 `data/法律法规/法规索引数据.xlsx`，并输出：
+
+```text
+database/regulation-index.json
+database/regulation-index.js
+```
+
+其中 `.js` 文件会被 `index.html` 直接加载，因此页面用 `file://` 打开时也能检索数据。
 
 ## 填充接口
 

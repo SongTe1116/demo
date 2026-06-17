@@ -414,8 +414,30 @@ h1 {
   font-weight: 900;
 }
 
+.region-item span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.region-item small {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 24px;
+  padding: 0 7px;
+  color: #2d65df;
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
 .region-item::after {
   content: "";
+  flex: 0 0 auto;
   width: 8px;
   height: 8px;
   border-top: 2px solid currentColor;
@@ -543,10 +565,21 @@ h1 {
   font-weight: 900;
 }
 
+.original-title {
+  margin: -2px 0 10px;
+  color: #6c7c91;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .result-summary {
   margin-bottom: 24px;
   color: #596a81;
   line-height: 1.58;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .metadata {

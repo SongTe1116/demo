@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "sync-data": "python3 scripts/build-regulation-index.py",
+    "sync-all": "npm run sync-data && npm run sync-tabs",
     "sync-tabs": "node scripts/build-top-tabs.mjs"
   }
 }

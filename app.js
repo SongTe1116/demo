@@ -17,73 +17,13 @@ const seedData = {
     { id: "mobility", label: "交通管理与行业数据监管" },
     { id: "crossborder", label: "数据跨境传输与监管遵从" }
   ],
-  regions: [
-    { id: "europe", label: "欧洲" },
-    { id: "asia", label: "亚洲" },
-    { id: "north-america", label: "北美洲" },
-    { id: "south-america", label: "南美洲" },
-    { id: "oceania", label: "大洋洲" },
-    { id: "africa", label: "非洲" }
-  ],
+  regions: [],
   insights: [
-    { value: "280", label: "法规条目占位" },
-    { value: "42", label: "重点地区占位" },
-    { value: "18", label: "待配置专题占位" }
+    { value: "0", label: "法规索引条目" },
+    { value: "0", label: "监管地区覆盖" },
+    { value: "0", label: "现行有效法规" }
   ],
-  results: [
-    {
-      id: "eu-ai-accountability",
-      title: "European Artificial Intelligence Accountability Framework Draft",
-      summary: "欧盟人工智能责任框架草案，覆盖高风险系统记录、模型透明度与责任追踪。",
-      region: "europe",
-      regionLabel: "欧洲",
-      type: "guide",
-      typeLabel: "监管指南",
-      topic: "ai",
-      topicLabel: "人工智能与新技术治理",
-      status: "现行有效",
-      date: "2026-05-18"
-    },
-    {
-      id: "asean-data-flow",
-      title: "ASEAN Trusted Data Flow Operational Baseline",
-      summary: "东盟可信数据流动操作基线，提供跨境传输评估、接收方义务和申诉协作模板。",
-      region: "asia",
-      regionLabel: "亚洲",
-      type: "treaty",
-      typeLabel: "国际条约",
-      topic: "crossborder",
-      topicLabel: "数据跨境传输与监管遵从",
-      status: "跟踪中",
-      date: "2026-04-02"
-    },
-    {
-      id: "us-connected-vehicle-data",
-      title: "Connected Vehicle Data Governance and Security Notice",
-      summary: "面向智能网联汽车的数据治理与安全通知，聚焦采集边界、供应链审查和远程更新。",
-      region: "north-america",
-      regionLabel: "北美洲",
-      type: "law",
-      typeLabel: "国家/地区法规",
-      topic: "mobility",
-      topicLabel: "交通管理与行业数据监管",
-      status: "草案征询",
-      date: "2026-03-21"
-    },
-    {
-      id: "au-privacy-modernization",
-      title: "Privacy Modernisation Package for Digital Services",
-      summary: "数字服务隐私现代化方案，包含儿童数据、敏感画像、自动化决策和通知义务。",
-      region: "oceania",
-      regionLabel: "大洋洲",
-      type: "law",
-      typeLabel: "国家/地区法规",
-      topic: "privacy",
-      topicLabel: "数据保护与隐私合规",
-      status: "现行有效",
-      date: "2026-02-10"
-    }
-  ]
+  results: []
 };
 
 const state = {
@@ -172,7 +112,13 @@ function renderRegions(regions) {
   nodes.regionList.innerHTML = regions
     .map((region) => {
       const active = state.selectedRegions.has(region.id) ? " is-active" : "";
-      return `<button class="region-item${active}" type="button" data-region="${escapeHTML(region.id)}">${escapeHTML(region.label)}</button>`;
+      const count = Number.isFinite(Number(region.count)) ? `<small>${escapeHTML(region.count)}</small>` : "";
+      return `
+        <button class="region-item${active}" type="button" data-region="${escapeHTML(region.id)}">
+          <span>${escapeHTML(region.label)}</span>
+          ${count}
+        </button>
+      `;
     })
     .join("");
 }
@@ -250,7 +196,18 @@ function toggleSetValue(set, value) {
 function getFilteredResults(results) {
   const query = state.query;
   const filtered = results.filter((item) => {
-    const searchable = [item.title, item.summary, item.regionLabel, item.typeLabel, item.topicLabel]
+    const searchable = [
+      item.title,
+      item.localTitle,
+      item.referenceNo,
+      item.summary,
+      item.englishSummary,
+      item.issuer,
+      item.regionLabel,
+      item.typeLabel,
+      item.topicLabel,
+      item.status
+    ]
       .join(" ")
       .toLowerCase();
     const matchesQuery = !query || searchable.includes(query);
@@ -263,8 +220,13 @@ function getFilteredResults(results) {
   return filtered.sort((a, b) => {
     if (state.sort === "region") return a.regionLabel.localeCompare(b.regionLabel, "zh-CN");
     if (state.sort === "status") return a.status.localeCompare(b.status, "zh-CN");
-    return new Date(b.date) - new Date(a.date);
+    return getTimeValue(b.date) - getTimeValue(a.date);
   });
+}
+
+function getTimeValue(value) {
+  const timestamp = new Date(value).getTime();
+  return Number.isFinite(timestamp) ? timestamp : 0;
 }
 
 function renderResults(config) {
@@ -275,27 +237,44 @@ function renderResults(config) {
 }
 
 function renderResultCard(item) {
+  const primaryTitle = item.localTitle || item.title || "未命名法规";
+  const secondaryTitle = item.localTitle && item.title && item.localTitle !== item.title
+    ? `<p class="original-title">${escapeHTML(item.title)}</p>`
+    : "";
+  const summary = item.summary || item.englishSummary || "暂无摘要。";
+  const effectiveDate = item.effectiveDate || "待确认";
+  const publishDate = item.publishDate || item.date || "待确认";
+  const issuer = item.issuer || "发布机构待确认";
+  const referenceNo = item.referenceNo ? `<span>发文字号：${escapeHTML(item.referenceNo)}</span>` : "";
+  const originalAction = item.originalUrl
+    ? `<a class="view-link" href="${escapeHTML(item.originalUrl)}" target="_blank" rel="noreferrer">`
+    : `<a class="view-link" href="#" data-id="${escapeHTML(item.id)}">`;
+
   return `
     <article class="result-card">
       <div class="result-main">
-        <h3 class="result-title">${escapeHTML(item.title)}</h3>
-        <p class="result-summary">${escapeHTML(item.summary)}</p>
+        <h3 class="result-title">${escapeHTML(primaryTitle)}</h3>
+        ${secondaryTitle}
+        <p class="result-summary">${escapeHTML(summary)}</p>
         <div class="metadata">
           <span>地区：${escapeHTML(item.regionLabel)}</span>
-          <span>法规类型：${escapeHTML(item.typeLabel)}</span>
-          <span>核心领域：${escapeHTML(item.topicLabel)}</span>
-          <span>更新：${escapeHTML(item.date)}</span>
+          <span>类型：${escapeHTML(item.typeLabel)}</span>
+          <span>领域：${escapeHTML(item.topicLabel)}</span>
+          <span>发布：${escapeHTML(publishDate)}</span>
+          <span>生效：${escapeHTML(effectiveDate)}</span>
+          ${referenceNo}
+          <span>机构：${escapeHTML(issuer)}</span>
         </div>
       </div>
       <div class="result-side">
         <div class="status-pill">${escapeHTML(item.status)}</div>
         <div class="card-actions">
-          <a class="view-link" href="#" data-id="${escapeHTML(item.id)}">
+          ${originalAction}
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 5h13a2 2 0 0 1 2 2v12H6a2 2 0 0 0-2 2V5Z"></path>
               <path d="M6 19h13"></path>
             </svg>
-            查看
+            ${item.originalUrl ? "原文" : "详情"}
           </a>
         </div>
       </div>
@@ -321,4 +300,30 @@ window.RegulationShell = {
   }
 };
 
-document.addEventListener("DOMContentLoaded", () => mount(seedData));
+function buildInsights(results, regions) {
+  const activeCount = results.filter((item) => item.status === "现行有效").length;
+  return [
+    { value: String(results.length), label: "法规索引条目" },
+    { value: String(regions.length), label: "监管地区覆盖" },
+    { value: String(activeCount), label: "现行有效法规" }
+  ];
+}
+
+function applyDatabase(payload) {
+  if (!payload || !Array.isArray(payload.results)) return;
+
+  seedData.results = payload.results;
+  if (Array.isArray(payload.regions)) seedData.regions = payload.regions;
+  if (Array.isArray(payload.types)) seedData.types = payload.types;
+  if (Array.isArray(payload.topics)) seedData.topics = payload.topics;
+  seedData.insights = buildInsights(seedData.results, seedData.regions);
+  mount(seedData);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.RegulationIndexDatabase) {
+    applyDatabase(window.RegulationIndexDatabase);
+    return;
+  }
+  mount(seedData);
+});
