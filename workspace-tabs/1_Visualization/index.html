@@ -6,67 +6,141 @@
     <title>可视化看板</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="styles.css" />
+    <script defer src="../../database/regulation-index.js"></script>
+    <script defer src="dashboard.js"></script>
   </head>
   <body>
-    <main class="visualization-page">
-      <section class="summary-band">
-        <div>
+    <main class="dashboard-page">
+      <section class="dashboard-hero">
+        <div class="hero-copy">
           <p class="eyebrow">REGULATORY VISUALIZATION</p>
-          <h1>可视化看板</h1>
-        </div>
-        <div class="summary-metrics" aria-label="可视化看板统计">
-          <div><strong>3</strong><span>数据域</span></div>
-          <div><strong>12</strong><span>合规字段</span></div>
-          <div><strong>EU</strong><span>示例地区</span></div>
+          <h1>法规可视化分析看板</h1>
+          <p class="hero-summary">基于法规索引数据构建多维筛选、联动图表和自动洞察，快速识别监管热区、时间趋势与即将生效风险。</p>
         </div>
       </section>
 
-      <section class="visualization-grid" aria-label="可视化入口">
-        <article class="visualization-card">
-          <span class="card-kicker">法律法规</span>
-          <h2>法规索引数据</h2>
-          <p>法规名称、地区、主题、状态和资料入口。</p>
-          <a href="../../data/法律法规/法规索引数据.xlsx">打开数据表</a>
+      <section class="control-band" aria-label="筛选条件">
+        <label>
+          <span>地区</span>
+          <select id="regionFilter"></select>
+        </label>
+        <label>
+          <span>核心领域</span>
+          <select id="topicFilter"></select>
+        </label>
+        <label>
+          <span>时效状态</span>
+          <select id="statusFilter"></select>
+        </label>
+        <label class="keyword-filter">
+          <span>关键词</span>
+          <input id="keywordFilter" type="search" placeholder="法规名称、机构、摘要" />
+        </label>
+        <button type="button" class="reset-button" id="resetFilters">重置</button>
+      </section>
+
+      <section class="overview-grid">
+        <div class="metric-strip" id="metricStrip" aria-label="核心指标"></div>
+        <div class="insight-panel">
+          <div>
+            <p class="section-kicker">AUTO INSIGHT</p>
+            <h2>当前监管态势</h2>
+          </div>
+          <p id="autoInsight"></p>
+          <button type="button" class="secondary-button" id="refreshInsight">生成洞察</button>
+        </div>
+      </section>
+
+      <section class="chart-grid">
+        <article class="chart-card chart-card-country" data-card="country">
+          <header class="card-header">
+            <div>
+              <p class="section-kicker">COUNTRY DISTRIBUTION</p>
+              <h2>国别合规分布</h2>
+            </div>
+            <button type="button" class="text-action" data-narrative="country">生成解读</button>
+          </header>
+          <div class="rank-chart" id="countryChart"></div>
         </article>
-        <article class="visualization-card">
-          <span class="card-kicker">义务拆解</span>
-          <h2>一对多结构化拆解</h2>
-          <p>条款原文、译文、含义解释、适用范围和监管要求。</p>
-          <a href="../../data/合规义务拆解/法律文本预处理与结构化拆解（一对多）.xls">打开拆解表</a>
+
+        <article class="chart-card chart-card-trend" data-card="trend">
+          <header class="card-header">
+            <div>
+              <p class="section-kicker">FIELD TREND</p>
+              <h2>领域趋势分析</h2>
+            </div>
+            <button type="button" class="text-action" data-narrative="trend">生成解读</button>
+          </header>
+          <div class="svg-chart" id="trendChart"></div>
         </article>
-        <article class="visualization-card">
-          <span class="card-kicker">映射体系</span>
-          <h2>多对多标签映射</h2>
-          <p>场景、义务、条款、监管要求和例外情形的映射关系。</p>
-          <a href="../../data/合规义务拆解/场景－义务－条款标签体系整合映射（多对多）.xls">打开映射表</a>
+
+        <article class="chart-card chart-card-status" data-card="status">
+          <header class="card-header">
+            <div>
+              <p class="section-kicker">VALIDITY STATUS</p>
+              <h2>法规时效状态</h2>
+            </div>
+            <button type="button" class="text-action" data-narrative="status">生成解读</button>
+          </header>
+          <div class="donut-layout">
+            <div id="statusChart"></div>
+            <div class="legend-list" id="statusLegend"></div>
+          </div>
+        </article>
+
+        <article class="chart-card chart-card-radar" data-card="radar">
+          <header class="card-header">
+            <div>
+              <p class="section-kicker">RULE SCORE</p>
+              <h2>合规参数对比</h2>
+            </div>
+            <button type="button" class="text-action" data-narrative="radar">生成解读</button>
+          </header>
+          <div class="svg-chart radar-slot" id="radarChart"></div>
+        </article>
+
+        <article class="chart-card chart-card-signal" data-card="obligation">
+          <header class="card-header">
+            <div>
+              <p class="section-kicker">REGULATORY SIGNAL</p>
+              <h2>高频监管关注点</h2>
+            </div>
+            <button type="button" class="text-action" data-narrative="obligation">生成解读</button>
+          </header>
+          <div class="rank-chart compact" id="obligationChart"></div>
+        </article>
+
+        <article class="chart-card chart-card-timeline" data-card="timeline">
+          <header class="card-header">
+            <div>
+              <p class="section-kicker">UPCOMING</p>
+              <h2>即将实施法规预警</h2>
+            </div>
+            <button type="button" class="text-action" data-narrative="timeline">生成解读</button>
+          </header>
+          <div class="timeline-list" id="timelineList"></div>
+        </article>
+
+        <article class="chart-card narrative-card chart-card-narrative">
+          <header class="card-header">
+            <div>
+              <p class="section-kicker">NARRATIVE</p>
+              <h2>图表解读文案</h2>
+            </div>
+          </header>
+          <p id="chartNarrative">选择任一图表的“生成解读”，这里会输出面向当前筛选条件的分析文案。</p>
         </article>
       </section>
 
-      <section class="field-table" aria-label="核心字段">
-        <header>
-          <h2>核心字段</h2>
-          <span>Data Act / GDPR</span>
+      <section class="record-panel">
+        <header class="card-header">
+          <div>
+            <p class="section-kicker">LATEST INDEX</p>
+            <h2>最新法规索引</h2>
+          </div>
+          <span id="datasetMeta"></span>
         </header>
-        <div class="table-row table-head">
-          <span>字段组</span>
-          <span>字段</span>
-          <span>用途</span>
-        </div>
-        <div class="table-row">
-          <span>条款结构</span>
-          <span>章节、条款编号、条款标题</span>
-          <span>建立法规文本的稳定索引。</span>
-        </div>
-        <div class="table-row">
-          <span>合规义务</span>
-          <span>动作指令、监管要求、例外情形</span>
-          <span>支持业务场景下的义务识别。</span>
-        </div>
-        <div class="table-row">
-          <span>标签映射</span>
-          <span>主体角色、行为动作、法律关系、责任后果</span>
-          <span>连接条款、义务和场景标签。</span>
-        </div>
+        <div class="record-list" id="recordList"></div>
       </section>
     </main>
   </body>

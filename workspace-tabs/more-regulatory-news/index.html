@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>更多法规资讯</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="news-desk.js"></script>
+  </head>
+  <body>
+    <main class="news-page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">REGULATORY NEWSFLOW</p>
+          <h1>更多法规资讯</h1>
+          <p class="hero-copy">汇聚全球监管机构、官方公报与权威媒体动态，集中呈现重点资讯、影响场景和关联法规。</p>
+        </div>
+        <div class="hero-status">
+          <span>资讯雷达</span>
+          <strong>8 条高相关动态待研判</strong>
+        </div>
+      </section>
+
+      <section class="kpi-strip" id="kpiStrip" aria-label="资讯概览"></section>
+
+      <section class="workspace">
+        <aside class="control-panel">
+          <div class="section-head compact">
+            <div>
+              <p class="section-kicker">FILTERS</p>
+              <h2>资讯筛选</h2>
+            </div>
+          </div>
+          <label>
+            <span>地区</span>
+            <select id="regionFilter"></select>
+          </label>
+          <label>
+            <span>领域</span>
+            <select id="topicFilter"></select>
+          </label>
+          <label>
+            <span>影响等级</span>
+            <select id="impactFilter"></select>
+          </label>
+          <label>
+            <span>关键词</span>
+            <input id="keywordFilter" type="search" placeholder="标题、来源、摘要" />
+          </label>
+          <button type="button" id="resetFilters" class="secondary-button">重置筛选</button>
+
+          <div class="source-card">
+            <p class="section-kicker">SOURCES</p>
+            <h3>来源覆盖</h3>
+            <div class="source-list">
+              <div><strong>EUR-Lex</strong><span>6 条</span></div>
+              <div><strong>全国人大英文版</strong><span>1 条</span></div>
+              <div><strong>California Legislative Information</strong><span>1 条</span></div>
+            </div>
+          </div>
+        </aside>
+
+        <section class="news-list-panel">
+          <header class="section-head compact">
+            <div>
+              <p class="section-kicker">INTAKE QUEUE</p>
+              <h2>资讯队列</h2>
+            </div>
+            <span id="queueCount"></span>
+          </header>
+          <div class="news-list" id="newsList"></div>
+        </section>
+
+        <section class="detail-panel" id="detailPanel" aria-live="polite">
+          <header class="section-head compact">
+            <div>
+              <p class="section-kicker">STRUCTURED OUTPUT</p>
+              <h2>结构化结果</h2>
+            </div>
+            <button type="button" id="generateBriefFromDetail" class="text-button">加入摘要</button>
+          </header>
+          <div id="detailContent"></div>
+        </section>
+      </section>
+
+      <section class="brief-panel">
+        <header class="section-head compact">
+          <div>
+            <p class="section-kicker">BRIEFING</p>
+            <h2>本周合规动态摘要</h2>
+          </div>
+          <button type="button" id="regenerateBrief" class="primary-button">刷新摘要</button>
+        </header>
+        <div id="briefPreview"></div>
+      </section>
+    </main>
+  </body>
+</html>

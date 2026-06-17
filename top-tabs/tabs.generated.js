@@ -9,6 +9,14 @@
         "order": 100,
         "folder": "workspace-tabs/1_Visualization",
         "url": "workspace-tabs/1_Visualization/index.html"
+      },
+      {
+        "id": "regulatory-news",
+        "label": "更多法规资讯",
+        "title": "更多法规资讯",
+        "order": 200,
+        "folder": "workspace-tabs/more-regulatory-news",
+        "url": "workspace-tabs/more-regulatory-news/index.html"
       }
     ]
   };
