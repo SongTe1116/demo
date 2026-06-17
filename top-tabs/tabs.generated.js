@@ -17,6 +17,14 @@
         "order": 200,
         "folder": "workspace-tabs/more-regulatory-news",
         "url": "workspace-tabs/more-regulatory-news/index.html"
+      },
+      {
+        "id": "agent",
+        "label": "Agent",
+        "title": "合规智能体",
+        "order": 500,
+        "folder": "workspace-tabs/5_Agent",
+        "url": "workspace-tabs/5_Agent/index.html"
       }
     ]
   };

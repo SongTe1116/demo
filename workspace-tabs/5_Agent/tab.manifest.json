@@ -1,0 +1,7 @@
+{
+  "id": "agent",
+  "label": "Agent",
+  "title": "合规智能体",
+  "order": 500,
+  "url": "index.html"
+}
