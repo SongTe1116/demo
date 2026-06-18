@@ -11,6 +11,14 @@
         "url": "workspace-tabs/1_Visualization/index.html"
       },
       {
+        "id": "knowledge-graph",
+        "label": "知识图谱",
+        "title": "知识图谱与法规关系映射",
+        "order": 120,
+        "folder": "workspace-tabs/3_3_Knowledge_Graph",
+        "url": "workspace-tabs/3_3_Knowledge_Graph/index.html?v=20260618-kg4"
+      },
+      {
         "id": "regulatory-news",
         "label": "更多法规资讯",
         "title": "更多法规资讯",
