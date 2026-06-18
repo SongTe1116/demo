@@ -210,7 +210,7 @@
     const topics = state.topic === "all" ? topicCounts.map(([topic]) => topic) : [state.topic];
     const width = 680;
     const height = 228;
-    const pad = { left: 42, right: 20, top: 18, bottom: 32 };
+    const pad = { left: 42, right: 20, top: 18, bottom: 42 };
     const usableW = width - pad.left - pad.right;
     const usableH = height - pad.top - pad.bottom;
     const data = topics.map((topic, index) => ({
@@ -233,7 +233,14 @@
       const label = Math.round(max * (1 - ratio));
       return `<line x1="${pad.left}" y1="${gy}" x2="${width - pad.right}" y2="${gy}" stroke="#dce7f2"/><text class="chart-axis" x="8" y="${gy + 4}">${label}</text>`;
     }).join("");
-    const yearLabels = years.map((year, index) => `<text class="chart-axis" x="${x(index)}" y="${height - 10}" text-anchor="middle">${year}</text>`).join("");
+    const labelEvery = years.length > 12 ? 3 : years.length > 7 ? 2 : 1;
+    const shouldShowYear = (index) => index === 0 || index === years.length - 1 || index % labelEvery === 0;
+    const yearLabels = years
+      .map((year, index) => {
+        if (!shouldShowYear(index)) return "";
+        return `<text class="chart-axis" x="${x(index)}" y="${height - 14}" text-anchor="middle">${year}</text>`;
+      })
+      .join("");
     const paths = data.map((serie) => {
       const points = serie.values.map((value, index) => `${x(index)},${y(value)}`);
       const circles = serie.values.map((value, index) => `<circle cx="${x(index)}" cy="${y(value)}" r="3.5" fill="${serie.color}"/>`).join("");

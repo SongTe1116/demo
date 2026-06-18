@@ -2,8 +2,8 @@
   "meta": {
     "source": "data/法律法规/法规索引数据.xlsx",
     "sheet": "Sheet2",
-    "generatedAt": "2026-06-17T13:32:39",
-    "total": 123,
+    "generatedAt": "2026-06-18T03:04:34",
+    "total": 130,
     "fields": [
       "法规标题",
       "中文标题",
@@ -18,84 +18,14 @@
   },
   "regions": [
     {
-      "id": "eu",
-      "label": "欧盟",
-      "count": 25
-    },
-    {
-      "id": "denmark",
-      "label": "丹麦",
-      "count": 5
-    },
-    {
-      "id": "hungary",
-      "label": "匈牙利",
-      "count": 5
-    },
-    {
-      "id": "austria",
-      "label": "奥地利",
-      "count": 2
-    },
-    {
-      "id": "greece",
-      "label": "希腊",
-      "count": 7
-    },
-    {
       "id": "germany",
       "label": "德国",
       "count": 12
     },
     {
-      "id": "italy",
-      "label": "意大利",
-      "count": 3
-    },
-    {
-      "id": "czechia",
-      "label": "捷克",
-      "count": 4
-    },
-    {
-      "id": "europe",
-      "label": "欧洲",
-      "count": 15
-    },
-    {
-      "id": "belgium",
-      "label": "比利时",
-      "count": 2
-    },
-    {
-      "id": "france",
-      "label": "法国",
-      "count": 5
-    },
-    {
-      "id": "poland",
-      "label": "波兰",
-      "count": 3
-    },
-    {
-      "id": "ireland",
-      "label": "爱尔兰",
-      "count": 5
-    },
-    {
-      "id": "estonia",
-      "label": "爱沙尼亚",
-      "count": 5
-    },
-    {
       "id": "sweden",
       "label": "瑞典",
       "count": 8
-    },
-    {
-      "id": "netherlands",
-      "label": "荷兰",
-      "count": 10
     },
     {
       "id": "portugal",
@@ -106,6 +36,91 @@
       "id": "spain",
       "label": "西班牙",
       "count": 2
+    },
+    {
+      "id": "eu",
+      "label": "欧盟",
+      "count": 29
+    },
+    {
+      "id": "greece",
+      "label": "希腊",
+      "count": 7
+    },
+    {
+      "id": "europe",
+      "label": "欧洲",
+      "count": 15
+    },
+    {
+      "id": "denmark",
+      "label": "丹麦",
+      "count": 5
+    },
+    {
+      "id": "france",
+      "label": "法国",
+      "count": 5
+    },
+    {
+      "id": "italy",
+      "label": "意大利",
+      "count": 3
+    },
+    {
+      "id": "belgium",
+      "label": "比利时",
+      "count": 2
+    },
+    {
+      "id": "ireland",
+      "label": "爱尔兰",
+      "count": 5
+    },
+    {
+      "id": "netherlands",
+      "label": "荷兰",
+      "count": 10
+    },
+    {
+      "id": "hungary",
+      "label": "匈牙利",
+      "count": 5
+    },
+    {
+      "id": "czechia",
+      "label": "捷克",
+      "count": 4
+    },
+    {
+      "id": "austria",
+      "label": "奥地利",
+      "count": 2
+    },
+    {
+      "id": "estonia",
+      "label": "爱沙尼亚",
+      "count": 5
+    },
+    {
+      "id": "poland",
+      "label": "波兰",
+      "count": 3
+    },
+    {
+      "id": "uk",
+      "label": "英国",
+      "count": 1
+    },
+    {
+      "id": "china",
+      "label": "中国",
+      "count": 1
+    },
+    {
+      "id": "california",
+      "label": "美国加州",
+      "count": 1
     }
   ],
   "types": [
@@ -2616,6 +2631,146 @@
       "topicLabel": "网络安全与韧性",
       "status": "现行有效",
       "date": "2018-05-09"
+    },
+    {
+      "id": "reg-124-uk-duaa-data-protection-complaints-2026",
+      "title": "Data (Use and Access) Act 2025 - new data protection complaints requirements",
+      "localTitle": "英国 DUAA 数据保护投诉处理义务",
+      "referenceNo": "Data (Use and Access) Act 2025; DPA 2018 Section 164A",
+      "publishDate": "2026-06-19",
+      "effectiveDate": "2026-06-19",
+      "issuer": "UK Information Commissioner's Office (ICO)",
+      "summary": "英国 ICO 提醒组织须在 2026 年 6 月 19 日前建立数据保护投诉处理流程，以满足《Data (Use and Access) Act 2025》引入的新要求。该要求影响数据主体投诉入口、响应时限、升级路径和留痕机制。",
+      "englishSummary": "The ICO reminds organisations that from 19 June 2026 they must have procedures in place for handling data protection complaints under the Data (Use and Access) Act 2025. The change affects complaint intake, response timeframes, escalation paths and record-keeping.",
+      "originalUrl": "https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2026/05/one-month-to-go-what-businesses-need-to-know-to-meet-new-data-law/",
+      "region": "uk",
+      "regionLabel": "英国",
+      "type": "guide",
+      "typeLabel": "监管指南",
+      "topic": "privacy",
+      "topicLabel": "数据保护与隐私合规",
+      "status": "即将生效",
+      "date": "2026-06-19"
+    },
+    {
+      "id": "reg-125-edpb-guidelines-1-2026-scientific-research",
+      "title": "Guidelines 1/2026 on processing of personal data for scientific research purposes",
+      "localTitle": "EDPB 科学研究个人数据处理指南 1/2026",
+      "referenceNo": "EDPB Guidelines 1/2026; consultation deadline 25 June 2026",
+      "publishDate": "2026-06-25",
+      "effectiveDate": "",
+      "issuer": "European Data Protection Board (EDPB)",
+      "summary": "EDPB Guidelines 1/2026 聚焦科学研究目的下个人数据处理，围绕 GDPR 合法基础、特殊类别数据、数据主体权利和研究场景保障措施征求意见，反馈截止日期为 2026 年 6 月 25 日。",
+      "englishSummary": "EDPB Guidelines 1/2026 address processing of personal data for scientific research purposes, including GDPR lawful bases, special categories of data, data subject rights and safeguards in research contexts. Comments are invited until 25 June 2026.",
+      "originalUrl": "https://www.edpb.europa.eu/our-work-tools/documents/public-consultations/2026/guidelines-12026-processing-personal-data_en",
+      "region": "eu",
+      "regionLabel": "欧盟",
+      "type": "guide",
+      "typeLabel": "监管指南",
+      "topic": "privacy",
+      "topicLabel": "数据保护与隐私合规",
+      "status": "待确认",
+      "date": "2026-06-25"
+    },
+    {
+      "id": "reg-126-eu-high-risk-ai-classification-guidelines-consultation",
+      "title": "Targeted consultation on draft guidelines for the classification of high-risk AI systems",
+      "localTitle": "欧委会高风险 AI 系统分类指南征询",
+      "referenceNo": "AI Act Art. 6; Annex I; Annex III; consultation deadline 23 July 2026",
+      "publishDate": "2026-05-19",
+      "effectiveDate": "",
+      "issuer": "European Commission",
+      "summary": "欧委会就 AI Act 高风险 AI 系统分类指南征询意见，旨在帮助提供者和部署者判断系统是否落入高风险类别及对应义务。征询原定 2026 年 6 月 23 日截止，现已延长至 2026 年 7 月 23 日。",
+      "englishSummary": "The European Commission is consulting on draft guidelines for classifying high-risk AI systems under the AI Act, helping providers and deployers assess whether systems fall into high-risk categories and related obligations. The consultation deadline has been extended to 23 July 2026.",
+      "originalUrl": "https://digital-strategy.ec.europa.eu/en/consultations/targeted-consultation-draft-guidelines-classification-high-risk-artificial-intelligence-systems",
+      "region": "eu",
+      "regionLabel": "欧盟",
+      "type": "guide",
+      "typeLabel": "监管指南",
+      "topic": "ai",
+      "topicLabel": "人工智能与新技术治理",
+      "status": "待确认",
+      "date": "2026-06-16"
+    },
+    {
+      "id": "reg-127-eu-code-practice-ai-generated-content",
+      "title": "Code of Practice on Transparency of AI-Generated Content",
+      "localTitle": "欧盟 AI 生成内容透明度实践守则",
+      "referenceNo": "AI Act Art. 50(2), Art. 50(4), Art. 50(5)",
+      "publishDate": "2026-06-10",
+      "effectiveDate": "2026-08-02",
+      "issuer": "European Commission / AI Office",
+      "summary": "欧盟 AI 生成内容透明度实践守则于 2026 年 6 月 10 日发布，支持 AI Act 第 50 条关于 AI 生成或操纵内容标记、检测和深度伪造标签的透明度义务；相关法定义务自 2026 年 8 月 2 日起适用。",
+      "englishSummary": "The Code of Practice on Transparency of AI-Generated Content, published on 10 June 2026, supports compliance with Article 50 AI Act transparency obligations on marking, detecting and labelling AI-generated or manipulated content and deepfakes. The legal obligations apply from 2 August 2026.",
+      "originalUrl": "https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content",
+      "region": "eu",
+      "regionLabel": "欧盟",
+      "type": "guide",
+      "typeLabel": "监管指南",
+      "topic": "ai",
+      "topicLabel": "人工智能与新技术治理",
+      "status": "即将生效",
+      "date": "2026-06-10"
+    },
+    {
+      "id": "reg-128-edpb-personal-data-breach-notification-template",
+      "title": "Template for personal data breach notification",
+      "localTitle": "EDPB 个人数据泄露通知模板",
+      "referenceNo": "GDPR Art. 33; GDPR Art. 34; consultation deadline 5 August 2026",
+      "publishDate": "2026-06-10",
+      "effectiveDate": "",
+      "issuer": "European Data Protection Board (EDPB)",
+      "summary": "EDPB 发布个人数据泄露通知模板并征求意见，面向监管机构 IT 工具实施，纳入通知字段、预设值和提示语，以提升 GDPR 第 33 条和第 34 条泄露通报的一致性。反馈截止日期为 2026 年 8 月 5 日。",
+      "englishSummary": "The EDPB published a template for personal data breach notification for consultation. The template supports implementation in supervisory authorities' IT tools and structures notification fields, predefined values and prompts for GDPR Articles 33 and 34. Comments are due by 5 August 2026.",
+      "originalUrl": "https://www.edpb.europa.eu/our-work-tools/documents/public-consultations/2026/template-personal-data-breach-notification_en",
+      "region": "eu",
+      "regionLabel": "欧盟",
+      "type": "guide",
+      "typeLabel": "监管指南",
+      "topic": "security",
+      "topicLabel": "网络安全与韧性",
+      "status": "待确认",
+      "date": "2026-06-10"
+    },
+    {
+      "id": "reg-129-china-personal-information-protection-law",
+      "title": "Personal Information Protection Law of the People's Republic of China",
+      "localTitle": "中华人民共和国个人信息保护法",
+      "referenceNo": "Adopted 20 August 2021",
+      "publishDate": "2021-08-20",
+      "effectiveDate": "2021-11-01",
+      "issuer": "Standing Committee of the National People's Congress",
+      "summary": "《个人信息保护法》规定个人信息处理原则、告知同意、敏感个人信息、自动化决策、个人信息出境、个人信息保护影响评估和处理者义务，是中国个人信息保护的基础性法律。",
+      "englishSummary": "China's Personal Information Protection Law sets rules for personal information processing, notice and consent, sensitive personal information, automated decision-making, cross-border transfers, personal information protection impact assessments and processor obligations.",
+      "originalUrl": "https://www.cac.gov.cn/2021-08/20/c_1631050028355286.htm",
+      "region": "china",
+      "regionLabel": "中国",
+      "type": "law",
+      "typeLabel": "国家/地区法规",
+      "topic": "privacy",
+      "topicLabel": "数据保护与隐私合规",
+      "status": "现行有效",
+      "date": "2021-08-20"
+    },
+    {
+      "id": "reg-130-california-ccpa-cpra-civil-code",
+      "title": "California Consumer Privacy Act / California Privacy Rights Act provisions",
+      "localTitle": "加州 CCPA/CPRA 消费者隐私权规则",
+      "referenceNo": "California Civil Code Title 1.81.5; §§1798.100-1798.199.100",
+      "publishDate": "2023-01-01",
+      "effectiveDate": "2023-01-01",
+      "issuer": "California Legislature",
+      "summary": "加州消费者隐私规则规定企业告知、访问、更正、删除、选择退出出售或共享个人信息、限制使用敏感个人信息以及消费者请求响应机制，是美国州级隐私合规的重要框架。",
+      "englishSummary": "The California Consumer Privacy Act, as amended by the California Privacy Rights Act, establishes notice, access, correction, deletion, opt-out of sale or sharing, sensitive personal information limits and consumer request response mechanisms.",
+      "originalUrl": "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?division=3.&lawCode=CIV&part=4.&title=1.81.5",
+      "region": "california",
+      "regionLabel": "美国加州",
+      "type": "law",
+      "typeLabel": "国家/地区法规",
+      "topic": "privacy",
+      "topicLabel": "数据保护与隐私合规",
+      "status": "现行有效",
+      "date": "2023-01-01"
     }
   ]
 }
