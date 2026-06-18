@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>知识图谱与法规关系映射</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css?v=20260618-kg4" />
+    <script defer src="graph-workbench.js?v=20260618-kg4"></script>
+  </head>
+  <body>
+    <main class="kg-page">
+      <section class="kg-header" aria-labelledby="kgTitle">
+        <div>
+          <p class="eyebrow">REGULATION KNOWLEDGE GRAPH</p>
+          <h1 id="kgTitle">知识图谱与法规关系映射</h1>
+          <p class="lead">把法规条款、合规义务、案例、指南和业务场景放进同一张关系网。用户可以从一个条款追踪多跳关系，也可以围绕一个主题对比不同法域下的法规映射。</p>
+        </div>
+        <div class="header-metrics" aria-label="当前图谱概览">
+          <div><strong>链路</strong><span>多跳追踪</span></div>
+          <div><strong>对比</strong><span>跨法域映射</span></div>
+          <div><strong>依据</strong><span>关系校验</span></div>
+        </div>
+      </section>
+
+      <section class="query-panel" aria-label="图谱查询流程">
+        <form class="query-box" id="queryForm">
+          <label for="graphQuery">输入法规、条款、领域或业务场景</label>
+          <div class="query-row">
+            <input id="graphQuery" type="search" value="GDPR 第 35 条 DPIA" autocomplete="off" />
+            <button type="submit">查询图谱</button>
+          </div>
+        </form>
+        <div class="workflow-strip" aria-label="使用流程">
+          <span>1. 输入问题</span>
+          <span>2. 选择分析模式</span>
+          <span>3. 展开关系网络</span>
+          <span>4. 查看证据与解释</span>
+        </div>
+      </section>
+
+      <section class="workbench">
+        <aside class="control-panel" aria-label="图谱控制">
+          <div class="panel-section">
+            <span class="section-label">图谱模式</span>
+            <div class="scenario-list" id="scenarioList"></div>
+          </div>
+
+          <div class="panel-section">
+            <span class="section-label">节点类型</span>
+            <div class="legend" id="legend"></div>
+          </div>
+
+          <div class="panel-section">
+            <span class="section-label">结果操作</span>
+            <button class="action-button" type="button" id="focusPath">聚焦主路径</button>
+            <button class="action-button secondary" type="button" id="exportSubgraph">导出当前子图</button>
+          </div>
+        </aside>
+
+        <section class="graph-stage" aria-label="法规关系图谱">
+          <div class="stage-toolbar">
+            <div>
+              <span class="section-label" id="modeLabel">链路追踪结果</span>
+              <h2 id="scenarioTitle">GDPR DPIA 关系链</h2>
+            </div>
+            <div class="quality-chip" id="qualityChip">人工复核优先</div>
+          </div>
+          <div class="graph-canvas" id="graphCanvas"></div>
+          <div class="path-strip" id="pathStrip"></div>
+        </section>
+
+        <aside class="detail-panel" aria-label="节点详情">
+          <section class="detail-card selected-node">
+            <span class="section-label">选中节点</span>
+            <h2 id="nodeTitle">GDPR 第 35 条</h2>
+            <p id="nodeSummary">数据保护影响评估，是高风险处理活动进入合规评估路径的关键条款。</p>
+            <div class="node-tags" id="nodeTags"></div>
+          </section>
+
+          <section class="detail-card">
+            <span class="section-label">关系依据</span>
+            <ol class="flow-list">
+              <li><strong>命中来源</strong><span id="evidenceRecall">法规、指南、案例片段。</span></li>
+              <li><strong>关系说明</strong><span id="evidenceReason">沿条款、义务、领域、案例关系补齐上下文。</span></li>
+              <li><strong>可信状态</strong><span id="evidenceCheck">图谱校验引用、关系方向与法域一致性。</span></li>
+            </ol>
+          </section>
+
+          <section class="detail-card">
+            <span class="section-label">关系可信度</span>
+            <div class="score-grid">
+              <div><strong>Schema</strong><span>节点与关系类型匹配</span></div>
+              <div><strong>来源</strong><span>保留法规或案例依据</span></div>
+              <div><strong>置信度</strong><span>低置信关系需标记</span></div>
+              <div><strong>复核</strong><span>关键法律关系人工确认</span></div>
+            </div>
+          </section>
+        </aside>
+      </section>
+
+      <section class="design-note" aria-label="设计说明">
+        <div>
+          <span class="card-kicker">Product Note</span>
+          <h2>页面定位</h2>
+        </div>
+        <p>这个页面不是单纯展示样例关系，而是模拟真实使用流程：当用户输入条款、领域或业务场景后，系统先判断适合“关系链追踪”还是“跨法域对比”。关系链追踪用于解释一个条款如何关联到义务、指南、案例和业务场景；跨法域对比则围绕同一合规主题，整理不同法域下的法规、条款、义务和适用条件。技术上，跨法域对比可以通过主题子图查询完成；产品上，它呈现为更容易理解的法规对比结果。后续如接入智能体，该图谱也可以作为结构化关系底座，为问答和报告生成提供可校验的关系依据。</p>
+      </section>
+    </main>
+  </body>
+</html>
