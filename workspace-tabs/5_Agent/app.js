@@ -1,6 +1,138 @@
 const app = document.getElementById("agentApp");
 let selectedAssistant = "compliance";
 
+const scenarioCases = {
+  "scenario-gap": {
+    icon: "file-check-2",
+    title: "GDPR 数据处理活动合规差距评估",
+    type: "合规差距评估",
+    region: "欧盟",
+    time: "2026-06-17 15:30",
+    prompt: "我们计划进入欧盟市场，请评估我们的数据处理活动与 GDPR 的差距。",
+    flow: ["识别任务意图", "检查输入完整性", "检索法规条款", "对比用户现状", "输出差距报告"],
+    inputs: [
+      ["数据处理活动", "车联网 App 账号注册、远程控车、驾驶行为分析", "已补充"],
+      ["处理目的", "账号管理、车辆安全、驾驶习惯报告、售后服务", "已补充"],
+      ["数据类型", "姓名、手机号、车辆 VIN、GPS 位置、驾驶行为、车内人脸图像", "已补充"],
+      ["处理主体", "中国总部、德国销售公司、云服务供应商", "已补充"],
+      ["跨境传输情况", "欧盟用户数据同步至新加坡云节点，用于统一分析", "待确认"],
+      ["保存期限", "账号信息 3 年；位置轨迹 18 个月；人脸图像 90 天", "已补充"]
+    ],
+    metrics: [
+      ["意图识别", "差距评估"],
+      ["完整性", "5/6"],
+      ["差距项", "8 项"],
+      ["最高风险", "高"]
+    ],
+    summary: "系统识别该任务为 GDPR 合规差距评估。当前输入已能支持初步分析，但跨境传输机制仍需用户确认。模拟报告显示 8 项差距，其中高风险 3 项，集中在跨境传输、敏感数据合法性基础和数据主体权利响应。",
+    columns: ["差距项", "风险", "法规依据", "建议动作"],
+    badgeColumn: 1,
+    rows: [
+      ["欧盟用户数据传输至新加坡云节点，但未说明 SCCs、充分性决定或其他传输机制。", "高", "GDPR Art.44-49", "补充跨境传输影响评估，签署 SCCs 并留存接收方安全措施。"],
+      ["车内人脸图像属于特殊类别数据，材料未说明 Art.9 例外依据。", "高", "GDPR Art.9", "明确是否取得明示同意，或移除不必要的人脸处理场景。"],
+      ["驾驶行为分析用于画像报告，隐私告知未覆盖画像逻辑和反对权。", "中", "GDPR Art.13-15, Art.21", "更新隐私政策，增加画像说明和用户反对处理入口。"],
+      ["位置轨迹保存 18 个月，未说明必要性和删除规则。", "中", "GDPR Art.5(1)(e)", "建立保存期限论证和自动删除策略。"]
+    ]
+  },
+  "scenario-quality": {
+    icon: "fingerprint",
+    title: "用户信息收集清单敏感信息识别",
+    type: "数据质检 / 敏感信息识别",
+    region: "中国 / 欧盟",
+    time: "2026-06-17 10:18",
+    prompt: "请解析《用户信息收集清单.xlsx》，识别哪些字段属于敏感个人信息、一般个人信息或非个人信息。",
+    flow: ["读取 Excel 表头", "解析字段名与说明", "匹配法规知识库", "分类标注字段", "输出质检表"],
+    inputs: [
+      ["上传文件", "用户信息收集清单.xlsx", "已解析"],
+      ["表头字段", "字段名、字段说明、采集场景、是否必填、保存期限", "已识别"],
+      ["适用法规", "中国个人信息保护法、GDPR", "已选择"],
+      ["业务场景", "车主 App 注册、车辆绑定、驾驶行为分析、售后服务", "已识别"],
+      ["字段总数", "18 个字段", "已统计"],
+      ["待复核项", "车内摄像头截图用途说明不足", "待确认"]
+    ],
+    metrics: [
+      ["字段总数", "18"],
+      ["敏感个人信息", "5"],
+      ["一般个人信息", "10"],
+      ["非个人信息", "3"]
+    ],
+    summary: "系统根据字段名、字段说明和采集场景进行分类。模拟结果识别出 5 个敏感个人信息字段，主要涉及精确位置、生物识别、身份证件和车辆行踪；3 个字段为非个人信息，可作为设备或系统运行信息处理。",
+    columns: ["字段名称", "分类", "判断依据", "对应法规条款"],
+    badgeColumn: 1,
+    rows: [
+      ["手机号", "一般个人信息", "可直接联系并识别自然人，但不属于高敏感类别。", "PIPL 第4条；GDPR Art.4(1)"],
+      ["实时 GPS 坐标", "敏感个人信息", "可反映个人行踪轨迹，泄露后可能危害人身财产安全。", "PIPL 第28条；GDPR Recital 30"],
+      ["车内人脸截图", "敏感个人信息", "涉及生物识别特征和车内影像，需单独授权和必要性说明。", "PIPL 第28条；GDPR Art.9"],
+      ["VIN 车辆识别码", "一般个人信息", "与车主账号绑定后可间接识别个人。", "PIPL 第4条；GDPR Art.4(1)"],
+      ["电池温度", "非个人信息", "单独字段反映车辆部件状态，不指向自然人。", "不适用个人信息条款"]
+    ]
+  },
+  "scenario-change": {
+    icon: "git-compare-arrows",
+    title: "德国自动驾驶法变更影响评估",
+    type: "法规变更影响评估",
+    region: "德国",
+    time: "2026-06-16 16:45",
+    prompt: "德国自动驾驶法最近修订了，请分析对我们已发布的合规手册有哪些影响。",
+    flow: ["识别目标法规", "检索新旧版本变化", "解析用户手册", "逐条比对", "输出需更新项"],
+    inputs: [
+      ["目标法规名称", "德国自动驾驶法 / 道路交通法自动驾驶相关条款", "已补充"],
+      ["用户文档", "自动驾驶功能合规手册 v2.1.docx", "已解析"],
+      ["产品范围", "L3/L4 自动驾驶测试车队和远程监控平台", "已补充"],
+      ["比对版本", "现行法规变化点 vs 手册 v2.1", "已确认"],
+      ["关注章节", "运行设计域、技术监督、事故接管、数据记录", "已识别"],
+      ["缺失信息", "内部责任人和更新时间未在手册中标注", "待补充"]
+    ],
+    metrics: [
+      ["变化点", "6"],
+      ["手册命中", "11 处"],
+      ["需更新", "5 项"],
+      ["优先级最高", "P0"]
+    ],
+    summary: "系统先限制输入为目标法规名称和合规手册文档，再模拟检索法规变化点并对照手册内容。结果显示手册 v2.1 有 5 项需更新，重点是技术监督人职责、事件记录字段、远程接管流程和测试区域限制。",
+    columns: ["变化点", "手册现状", "影响等级", "需更新内容"],
+    badgeColumn: 2,
+    rows: [
+      ["技术监督人职责要求细化", "手册仅写明需设置安全员，未定义持续监控和干预责任。", "高", "增加技术监督人职责、授权条件、值守记录和升级机制。"],
+      ["自动驾驶事件记录字段扩展", "当前事件日志未覆盖远程指令、接管原因和系统最小风险状态。", "高", "更新数据记录模板，补充事件触发、接管链路和保存期限。"],
+      ["运行设计域变更需重新评估", "手册对 ODD 变更仅要求产品评审，缺少法规复核。", "中", "加入 ODD 变更合规复核节点和审批留痕。"],
+      ["远程监控平台安全要求增强", "网络安全章节引用较旧，未覆盖远程操作权限分级。", "中", "补充远程访问控制、操作审计和异常阻断流程。"]
+    ]
+  },
+  "scenario-roadmap": {
+    icon: "map",
+    title: "东南亚三国网约车数据合规路线图",
+    type: "跨法域合规路径规划",
+    region: "新加坡 / 泰国 / 印尼",
+    time: "2026-06-15 11:20",
+    prompt: "我们计划在东南亚三国开展网约车业务，请生成数据合规路线图。",
+    flow: ["限定国家与业务", "确认数据类型", "匹配法域要求", "拆分阶段任务", "输出路线图"],
+    inputs: [
+      ["目标国家", "新加坡、泰国、印尼", "已补充"],
+      ["业务类型", "网约车平台，含司机入驻、乘客叫车、行程结算、客服投诉", "已补充"],
+      ["数据类型", "身份信息、位置轨迹、支付记录、驾驶证件、客服录音", "已补充"],
+      ["目标场景", "本地上线、跨境数据分析、第三方支付和客服外包", "已补充"],
+      ["数据主体", "乘客、司机、紧急联系人、企业客户联系人", "已识别"],
+      ["宽泛风险", "未限定城市、供应商和数据落地架构", "需二次细化"]
+    ],
+    metrics: [
+      ["国家", "3"],
+      ["阶段", "4"],
+      ["任务", "16"],
+      ["首要动作", "数据地图"]
+    ],
+    summary: "该任务范围较宽，Demo 先要求用户明确国家、业务类型、数据类型和目标场景，再输出分阶段清单。模拟路线图按照上线前、试运营、规模化运营和持续治理四个阶段拆解，避免生成空泛报告。",
+    columns: ["阶段", "重点任务", "适用法域", "交付物"],
+    badgeColumn: -1,
+    rows: [
+      ["阶段 1：上线前 0-2 个月", "建立数据地图，区分乘客、司机、车辆、支付和客服数据流。", "三国通用", "数据处理活动清单、字段分级表、供应商清单"],
+      ["阶段 2：上线前 2-4 个月", "完成隐私告知、同意管理、司机证件处理规则和跨境传输评估。", "新加坡 PDPA、泰国 PDPA、印尼 PDP Law", "隐私政策、本地同意文案、跨境传输记录"],
+      ["阶段 3：试运营", "验证数据主体请求、删除/更正流程、客服录音访问权限和安全事件响应。", "三国通用", "DSR 工单流程、权限矩阵、事件响应预案"],
+      ["阶段 4：规模化运营", "建立季度审计、供应商复核、模型画像评估和监管问询响应机制。", "三国通用", "季度合规报告、供应商评估表、监管响应包"]
+    ]
+  }
+};
+
 function renderHome() {
   app.className = "agent-app home-page";
   app.innerHTML = `
@@ -50,9 +182,10 @@ function renderHome() {
         </div>
         <div class="task-table">
           <div class="table-head"><span>任务名称</span><span>任务类型</span><span>国家/地区</span><span>状态</span><span>更新时间</span></div>
-          <div class="selectable-row is-selected"><span><i data-lucide="file-check-2"></i>GDPR 车联网差距评估</span><span>合规差距评估</span><span>欧盟</span><b>进行中</b><span>2026-06-17 15:30</span></div>
-          <div class="selectable-row"><span><i data-lucide="fingerprint"></i>PII 字段识别-驾驶员画像</span><span>敏感数据识别</span><span>中国</span><b class="done">已完成</b><span>2026-06-17 10:18</span></div>
-          <div class="selectable-row"><span><i data-lucide="git-compare-arrows"></i>欧盟 AI Act 变更影响</span><span>变更影响分析</span><span>欧盟</span><b class="done">已完成</b><span>2026-06-16 16:45</span></div>
+          <div class="selectable-row is-selected" data-view="scenario-gap"><span><i data-lucide="file-check-2"></i>GDPR 数据处理活动差距评估</span><span>合规差距评估</span><span>欧盟</span><b class="done">已完成</b><span>2026-06-17 15:30</span></div>
+          <div class="selectable-row" data-view="scenario-quality"><span><i data-lucide="fingerprint"></i>用户信息收集清单敏感识别</span><span>数据质检 / 敏感识别</span><span>中国 / 欧盟</span><b class="done">已完成</b><span>2026-06-17 10:18</span></div>
+          <div class="selectable-row" data-view="scenario-change"><span><i data-lucide="git-compare-arrows"></i>德国自动驾驶法影响评估</span><span>法规变更影响</span><span>德国</span><b class="done">已完成</b><span>2026-06-16 16:45</span></div>
+          <div class="selectable-row" data-view="scenario-roadmap"><span><i data-lucide="map"></i>东南亚网约车合规路线图</span><span>跨法域路径规划</span><span>东南亚</span><b class="done">已完成</b><span>2026-06-15 11:20</span></div>
         </div>
       </article>
 
@@ -232,6 +365,61 @@ function renderReport() {
             <p>评估并采用适当的跨境传输合规机制，如标准合同条款（SCCs）等。</p>
           </section>
         </aside>
+      </section>
+    </section>
+  `;
+}
+
+function renderScenario(view) {
+  const item = scenarioCases[view] || scenarioCases["scenario-gap"];
+  app.className = "agent-app light-page";
+  app.innerHTML = `
+    <section class="report-page scenario-page">
+      <div class="report-actions">
+        <button type="button" data-view="home"><i data-lucide="arrow-left"></i>返回首页</button>
+        <div>
+          <button type="button"><i data-lucide="download"></i>导出结果</button>
+          <button class="primary" type="button"><i data-lucide="message-circle-question"></i>继续追问</button>
+        </div>
+      </div>
+
+      <header class="report-title scenario-title">
+        <span><i data-lucide="${item.icon}"></i>${item.type}</span>
+        <h1>${item.title}</h1>
+        <p>国家/地区：${item.region}　|　任务状态：已完成　|　更新时间：${item.time}</p>
+      </header>
+
+      <section class="scenario-flow panel">
+        ${item.flow.map((step, index) => `<div><b>${index + 1}</b><span>${step}</span></div>`).join("")}
+      </section>
+
+      <section class="scenario-metrics">
+        ${item.metrics.map((metric) => `<article><span>${metric[0]}</span><strong>${metric[1]}</strong></article>`).join("")}
+      </section>
+
+      <section class="scenario-grid">
+        <article class="panel scenario-input">
+          <div class="panel-head"><strong><i data-lucide="clipboard-check"></i>需求数据 / 输入检测</strong><button type="button">模拟数据</button></div>
+          <div class="prompt-review scenario-prompt">
+            <p>${item.prompt}</p>
+          </div>
+          <div class="input-check-table">
+            <div class="thead"><span>检查项</span><span>用户提供内容</span><span>状态</span></div>
+            ${item.inputs.map((row) => `<div><strong>${row[0]}</strong><p>${row[1]}</p><b class="${row[2].includes("待") || row[2].includes("需") ? "warn" : ""}">${row[2]}</b></div>`).join("")}
+          </div>
+        </article>
+
+        <article class="panel scenario-output">
+          <div class="panel-head"><strong><i data-lucide="file-spreadsheet"></i>最终结果</strong><button type="button">查看依据</button></div>
+          <div class="summary-box">
+            <strong>模拟结论</strong>
+            <p>${item.summary}</p>
+          </div>
+          <div class="scenario-result-table">
+            <div class="thead">${item.columns.map((column) => `<span>${column}</span>`).join("")}</div>
+            ${item.rows.map((row) => `<div>${row.map((cell, index) => index === item.badgeColumn ? `<b class="${cell === "高" || cell.includes("敏感") ? "high" : cell === "中" ? "mid" : ""}">${cell}</b>` : `<p>${cell}</p>`).join("")}</div>`).join("")}
+          </div>
+        </article>
       </section>
     </section>
   `;
@@ -424,6 +612,7 @@ function renderDocTranslate() {
 function navigate(view) {
   if (view === "upload") renderUpload();
   else if (view === "report") renderReport();
+  else if (scenarioCases[view]) renderScenario(view);
   else if (view === "doc-summary") renderDocSummary();
   else if (view === "doc-translate") renderDocTranslate();
   else renderHome();
